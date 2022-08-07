@@ -1,6 +1,6 @@
 # iFood Analyzer (in early development)
 
-Browser extension to search for good and cheap iFood items.
+Browser extension to search for iFood items throught multiple merchants at same time.
 
 This project uses [vf-ext](https://github.com/vanflux/vf-ext) to create browser extensions. If you want to create extensions like this, take a look.
 
@@ -29,7 +29,7 @@ If you go to menu code you will see the hardcoded filter functions:
 Merchant filter:
 ```ts
 const myMerchantFilter = (merchant: IfoodMerchantSearchItem) => {
-  return merchant.userRating >= 4.4 && merchant.deliveryInfo.fee === 0;
+  return merchant.available && merchant.currency === 'BRL' && merchant.userRating >= 4.4 && merchant.deliveryInfo.fee === 0;
 };
 ```
 

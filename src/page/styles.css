@@ -8,3 +8,12 @@
   bottom: 0px;
   pointer-events: none;
 }
+
+#vfeRoot button {
+  border: none;
+  background-color: red;
+  color: white;
+  padding: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}

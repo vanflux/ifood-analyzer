@@ -33,6 +33,7 @@ export class IfoodProductSearcher {
           setTimeout(() => resolve(new IfoodMerchantCatalogSearch(this.client, x.id).getCatalog()), i * 100)
         ))
       )));
+      console.log('Merchants', merchants);
       console.log('Filtered merchants', filteredMerchants);
       console.log('Catalogs', catalogs);
     }
