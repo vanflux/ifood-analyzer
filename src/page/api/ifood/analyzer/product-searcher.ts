@@ -11,7 +11,7 @@ export class IfoodProductSearcher {
   constructor(
     private client: IfoodClient,
     private merchantFilterFn: (item: IfoodMerchantSearchItem) => boolean,
-    private productFilterFn: (item: IfoodProductSearcherItem) => boolean,
+    private productFilterFn: (item: IfoodMerchantCatalogProduct) => boolean,
     private mocked = false,
   ) {}
 
@@ -39,7 +39,7 @@ export class IfoodProductSearcher {
     }
 
     const items = catalogs.flatMap((catalog, i) => catalog.menu.flatMap(menu => menu.itens.map(product => ({ product, merchant: filteredMerchants[i] }))));
-    const filteredItems = items.filter(this.productFilterFn);
+    const filteredItems = items.filter(({product}) => this.productFilterFn(product));
 
     console.log('Products length:', items.length);
     console.log('Filtered products length:', filteredItems.length);

@@ -1,6 +1,6 @@
 import styles from "./styles.module.css";
 import React from "react";
-import { IfoodProductSearcherItem } from "../../ifood/analyzer/product-searcher";
+import { IfoodProductSearcherItem } from "../../api/ifood";
 
 export function ItemList({ items }: { items: IfoodProductSearcherItem[] }) {
   return <div className={styles.container}>

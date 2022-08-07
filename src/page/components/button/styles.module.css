@@ -1,0 +1,19 @@
+.base {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  padding: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.primary {
+  background-color: red;
+  color: white;
+}
+
+.secondary {
+  background-color: white;
+  color: red;
+}

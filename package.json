@@ -10,7 +10,12 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@monaco-editor/react": "^4.4.5",
+		"@types/react": "^18.0.16",
 		"react-draggable": "^4.4.5",
-		"vf-ext-framework": "github:vanflux/vf-ext-framework"
+		"safe-eval": "^0.4.1",
+		"vf-ext-framework": "github:vanflux/vf-ext-framework",
+		"vm-browserify": "^1.1.2",
+		"zustand": "^4.0.0"
 	}
 }
