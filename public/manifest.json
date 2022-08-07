@@ -1,0 +1,21 @@
+{
+	"name": "ifood-analyzer",
+	"description": "Browser extension to search for good and cheap iFood items.",
+	"icons": {
+		"16": "icon16.png",
+		"32": "icon32.png",
+		"48": "icon48.png",
+		"128": "icon128.png"
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"https://www.ifood.com.br/*"
+			],
+			"js": [
+				"content.js"
+			],
+			"run_at": "document_start"
+		}
+	]
+}

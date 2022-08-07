@@ -1,0 +1,16 @@
+{
+	"name": "ifood-analyzer",
+	"version": "1.0.0",
+	"description": "Browser extension to search for good and cheap iFood items.",
+	"scripts": {
+		"start": "vfe start",
+		"build": "vfe build"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"react-draggable": "^4.4.5",
+		"vf-ext-framework": "github:vanflux/vf-ext-framework"
+	}
+}
