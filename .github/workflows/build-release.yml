@@ -59,6 +59,4 @@ jobs:
           tag: v${{ steps.vars.outputs.version }}
           name: Release ${{ steps.vars.outputs.version }}
           bodyFile: RELEASE_final.md
-          draft: true
-          prerelease: true
           token: ${{ secrets.GITHUB_TOKEN }}
