@@ -1,12 +1,14 @@
 # iFood Analyzer (in early development)
 
-Browser extension to search for iFood items throught multiple merchants at same time.
+Browser extension to search for iFood items throught multiple merchants at same time. This is mostly for fun, I have no intention of maintaining this project forever.
 
 This project uses [vf-ext](https://github.com/vanflux/vf-ext) to create browser extensions. If you want to create extensions like this, take a look.
 
 ## Usage
 
-- Oh, wait a bit
+- Oh, wait a bit, in few days I will start publishing the extension builds...
+
+![](./docs/images/screenshoot.png)
 
 ## Usage (development)
 
@@ -17,30 +19,13 @@ This project uses [vf-ext](https://github.com/vanflux/vf-ext) to create browser 
 
 ## State
 
-What the extension does at the moment (hardcoded):
-- Fetches the 100 first merchants related to a keyword like "sushi"
-- Apply filters to discart some merchants
+What the extension does at the moment:
+- Fetches the 100 first merchants related to a term like "sushi"
+- Apply filters to discart some merchants (configured by the user)
 - Fetches the catalog of each
-- Apply filters to discart products
-- Show the result on a ugly menu.
-
-If you go to menu code you will see the hardcoded filter functions:
-
-Merchant filter:
-```ts
-const myMerchantFilter = (merchant: IfoodMerchantSearchItem) => {
-  return merchant.available && merchant.currency === 'BRL' && merchant.userRating >= 4.4 && merchant.deliveryInfo.fee === 0;
-};
-```
-
-Product filter:
-```ts
-const mySushiFilter = ({ product, merchant }: IfoodProductSearcherItem) => {
-  const txt = ((product.description || '') + '\n' + (product.details || '')).toLowerCase();
-  return txt.includes('combo') && !txt.includes('skin') && txt.includes('sushi') && !txt.includes('yakisoba');
-};
-```
+- Apply filters to discart products (configured by the user)
+- Show the result on a window (merchants + items)
 
 ## Goal
 
-Provide some API or UI for the user configure filters to merch & products and get the final cart.
+- [In progress] Provide some API or UI for the user configure filters to merch & products and get the final cart.
