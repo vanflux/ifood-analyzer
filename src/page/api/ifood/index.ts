@@ -1,3 +1,3 @@
-export * from './api/client';
-export * from './api/operations/merchant-calalog-search';
-export * from './api/operations/merchant-search';
+export * from './client';
+export * from './operations/merchant-calalog-search';
+export * from './operations/merchant-search';

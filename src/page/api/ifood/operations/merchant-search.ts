@@ -1,5 +1,5 @@
-import { CacheFn, createCache } from "../../../../utils/cache";
-import { getCoords } from "../../utils/get-location";
+import { CacheFn, createCache } from "../../../utils/cache";
+import { getCoords } from "../utils/get-location";
 import { IfoodClient } from "../client";
 
 export interface IfoodMerchantSearchItem {
