@@ -11,7 +11,9 @@
 	"license": "ISC",
 	"dependencies": {
 		"@monaco-editor/react": "^4.4.5",
+		"@types/debounce": "^1.2.1",
 		"@types/react": "^18.0.16",
+		"debounce": "^1.2.1",
 		"react-draggable": "^4.4.5",
 		"safe-eval": "^0.4.1",
 		"vf-ext-framework": "github:vanflux/vf-ext-framework",

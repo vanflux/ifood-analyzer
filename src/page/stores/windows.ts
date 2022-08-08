@@ -13,7 +13,7 @@ export const useWindowsStore = create<WindowsStore>((set) => ({
     set((state) => {
       const alreadyExists = state.instances.findIndex(instance => instance.name === name) >= 0;
       if (alreadyExists) return {};
-      return { instances: state.instances.concat([{ name, title, elem }]) };
+      return { instances: state.instances.concat([{ name, initialX: state.instances.length * 400, title, elem }]) };
     });
   },
   destroy(name: string) {

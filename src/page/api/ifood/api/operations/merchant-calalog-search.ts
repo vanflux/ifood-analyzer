@@ -1,3 +1,4 @@
+import { CacheFn, createCache } from "../../../../utils/cache";
 import { getCoords } from "../../utils/get-location";
 import { IfoodClient } from "../client";
 
@@ -43,24 +44,30 @@ export interface IfoodMerchantCatalogProductInfo {
 }
 
 export class IfoodMerchantCatalogSearch {
+  private cache: CacheFn<IfoodMerchantCatalog>;
+  
   constructor(
     private client: IfoodClient,
     private merchantId: string,
-  ) {}
+  ) {
+    this.cache = createCache(`ifood_merchant_catalog_search_${merchantId}`);
+  }
 
   async getCatalog(): Promise<IfoodMerchantCatalog> {
-    const coords = getCoords();
-    if (!coords) throw new Error('Coords not found');
-    const { latitude, longitude } = coords;
-
-    const res = await this.client.makeCall<any>(
-      'GET',
-      `https://wsloja.ifood.com.br/ifood-ws-v3/v1/merchants/${this.merchantId}/catalog?latitude=${latitude}&longitude=${longitude}`,
-      {},
-    );
-
-    if (res?.code !== '00') throw new Error('Error on getting merchant catalog, code = ' + res.code);
-    
-    return res.data;
+    return this.cache(async () => {
+      const coords = getCoords();
+      if (!coords) throw new Error('Coords not found');
+      const { latitude, longitude } = coords;
+  
+      const res = await this.client.makeCall<any>(
+        'GET',
+        `https://wsloja.ifood.com.br/ifood-ws-v3/v1/merchants/${this.merchantId}/catalog?latitude=${latitude}&longitude=${longitude}`,
+        {},
+      );
+  
+      if (res?.code !== '00') throw new Error('Error on getting merchant catalog, code = ' + res.code);
+      
+      return res.data;
+    });
   }
 }

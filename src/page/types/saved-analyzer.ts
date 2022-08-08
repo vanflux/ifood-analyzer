@@ -1,6 +1,6 @@
 
 export interface SavedAnalyzer {
+  id: number;
   name: string;
-  tsCode: string;
-  jsCode: string;
+  tsCode?: string;
 }

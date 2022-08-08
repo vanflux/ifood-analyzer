@@ -1,0 +1,30 @@
+
+.container {
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+  width: 100%;
+  flex: 1;
+  padding: 5px;
+}
+
+.merchantList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.merchant {
+  display: flex;
+  width: 100%;
+  background-color: white;
+  align-items: center;
+  padding: 10px;
+  white-space: pre-line;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+  flex: 1;
+}
+
+.merchant > img {
+  margin-right: 8px;
+}

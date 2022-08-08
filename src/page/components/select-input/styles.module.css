@@ -1,0 +1,6 @@
+.base {
+  border: 1px solid rgb(153, 153, 153);
+  padding: 0px 8px;
+  border-radius: 6px;
+  height: 32px;
+}
