@@ -6,7 +6,24 @@ This project uses [vf-ext](https://github.com/vanflux/vf-ext) to create browser 
 
 ## Usage
 
-- Oh, wait a bit, in few days I will start publishing the extension builds...
+### **Chrome**
+
+- Download the latest [ifood-analyzer.chrome.zip](https://github.com/vanflux/ifood-analyzer/releases)
+- Unzip to some location on your PC
+- Go to url chrome://extensions
+- Enable development mode
+- Load the uncompressed extension and pick the unzipped directory
+- Go to ifood.com.br and login on your account
+
+### **Firefox**
+
+- Download the latest [ifood-analyzer.firefox.zip](https://github.com/vanflux/ifood-analyzer/releases)
+- Go to url about:debugging
+- Go to This Firefox
+- Load temporary add-ons and pick the .zip
+- Go to ifood.com.br and login on your account
+
+---
 
 ![](./docs/images/screenshoot.png)
 
