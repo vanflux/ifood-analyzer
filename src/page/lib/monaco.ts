@@ -1,11 +1,9 @@
-import { Monaco, useMonaco } from "@monaco-editor/react";
-import { useEffect } from "react";
-import monaco from "monaco-editor";
+import loader, { Monaco } from "@monaco-editor/loader";
+import { editor, languages } from "monaco-editor";
 
-let alreadyConfigured = false;
-
-let tsWorkerModel: monaco.editor.IModel;
-let tsWorker: monaco.languages.typescript.TypeScriptWorker;
+let monaco: Monaco | undefined;
+let tsWorkerModel: editor.IModel;
+let tsWorker: languages.typescript.TypeScriptWorker;
 
 const lib = `
 interface Merchant {
@@ -63,16 +61,12 @@ interface Product {
 }
 `;
 
-export function useConfiguredMonaco() {
-  const monaco = useMonaco();
-
-  useEffect(() => {
-    if (!monaco) return;
-    if (alreadyConfigured) return;
-    alreadyConfigured = true;
+export async function getMonaco() {
+  if (!monaco) {
+    monaco = await loader.init();
 
     monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
-      noSemanticValidation: true,
+      noSemanticValidation: false,
       noSyntaxValidation: false,
     });
   
@@ -84,12 +78,12 @@ export function useConfiguredMonaco() {
     const libUri = 'ts:filename/lib.d.ts';
     monaco.languages.typescript.typescriptDefaults.addExtraLib(lib, libUri);
     monaco.editor.createModel(lib, 'typescript', monaco.Uri.parse(libUri));
-  }, [monaco]);
-
-  return monaco;
+  }
+  return monaco!;
 }
 
-export async function getTsWorker(monaco: Monaco) {
+export async function getTsWorker() {
+  const monaco = await getMonaco();
   if (!tsWorker) {
     console.log('Creating transpiler...');
     tsWorkerModel = monaco.editor.createModel('', 'typescript');
@@ -99,17 +93,29 @@ export async function getTsWorker(monaco: Monaco) {
   return tsWorker;
 }
 
-export async function transpile(monaco: Monaco, tsCode: string) {
-  if (!tsWorker) await getTsWorker(monaco);
+export async function transpile(tsCode: string) {
+  if (!tsWorker) await getTsWorker();
   tsWorkerModel.setValue(tsCode);
   const output = await tsWorker.getEmitOutput(tsWorkerModel.uri.toString());
+  // Monaco model namespaces are NOT isolated...
+  // we need to clear the code from the worker model
+  // if not, semantic "duplicated function" errors will appear on editor models
+  tsWorkerModel.setValue('');
   const jsCode = output.outputFiles[0].text;
   return jsCode;
 }
 
-export async function getSemanticDiagnostics(monaco: Monaco, tsCode: string) {
-  if (!tsWorker) await getTsWorker(monaco);
-  tsWorkerModel.setValue(tsCode);
-  const semanticDiagnostics = await tsWorker.getSemanticDiagnostics(tsWorkerModel.uri.toString());
-  return semanticDiagnostics;
+export async function disposeMonaco() {
+  const monaco = await getMonaco();
+  tsWorkerModel?.dispose();
+  monaco.editor.getModels().forEach(model => model.dispose());
+}
+
+export async function createEditor(
+  elem: HTMLElement,
+  options: editor.IStandaloneEditorConstructionOptions | undefined,
+  override?: editor.IEditorOverrideServices | undefined
+) {
+  const monaco = await getMonaco();
+  return monaco.editor.create(elem, options, override);
 }

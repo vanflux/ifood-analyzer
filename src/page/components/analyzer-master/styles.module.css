@@ -14,6 +14,17 @@
   margin: 10px 0px;
 }
 
+.group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 310px;
+  border: 1px solid rgb(214, 214, 214);
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
 .row {
   display: flex;
   gap: 4px;

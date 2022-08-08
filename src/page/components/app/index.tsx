@@ -11,7 +11,7 @@ export function App() {
   const { instances, create } = useWindowsStore();
   const { save } = useSavedAnalyzersStore();
   useEffect(() => {
-    save({ id: 0, name: 'My Sushi 1', tsCode: `
+    save({ name: 'My Sushi 1', tsCode: `
 function merchantFilter(merchant: Merchant) {
   if (!merchant.available) return false;
   if (merchant.userRating < 4.4) return false;
@@ -33,9 +33,8 @@ function productFilter(product: Product) {
 }
 ` });
     create('analyzer', 'Analyzer Master', <AnalyzerMaster></AnalyzerMaster>);
-    create('analyzer_editor', 'Analyzer Editor', <AnalyzerEditor id={0}></AnalyzerEditor>);
   }, []);
   return <>
-    {instances.map(instance => <WindowComponent key={instance.name} instance={instance}></WindowComponent>)}
+    {instances.map(instance => <WindowComponent key={instance.id} instance={instance}></WindowComponent>)}
   </>
 }

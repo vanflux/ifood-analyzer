@@ -10,16 +10,17 @@ import { MerchantList } from "../merchant-list";
 import { useWindowsStore } from "../../stores/windows";
 import { SelectInput } from "../select-input";
 import { ItemList } from "../item-list";
-import { getSemanticDiagnostics, transpile, useConfiguredMonaco } from "../../lib/monaco";
+import { disposeMonaco, transpile } from "../../lib/monaco";
+import { AnalyzerEditor } from "../analyzer-editor";
 
 export function AnalyzerMaster() {
   const [ term, setTerm ] = useState('');
-  const { savedAnalyzers } = useSavedAnalyzersStore();
+  const { save, savedAnalyzers } = useSavedAnalyzersStore();
   const [ savedAnalyzerId, setSavedAnalyzerId ] = useState<number>();
-  const { create } = useWindowsStore();
+  const [ editSavedAnalyzerId, setEditSavedAnalyzerId ] = useState<number>();
+  const { create, destroy } = useWindowsStore();
   const [ ifoodClient, setIfoodClient ] = useState<IfoodClient>();
   const { merchants, filteredMerchants, items, searchMerchs, searchItems } = useCurrentAnalyzeStore();
-  const monaco = useConfiguredMonaco();
 
   const searchForMerchs = async () => {
     if (!ifoodClient) return alert('Ifood client not defined!');
@@ -39,21 +40,13 @@ export function AnalyzerMaster() {
   };
 
   const prepareFilters = async () => {
-    if (!monaco) return;
     if (savedAnalyzerId === undefined) return;
     const savedAnalyzer = savedAnalyzers.find(savedAnalyzer => savedAnalyzer.id == savedAnalyzerId);
     if (!savedAnalyzer) return;
     const tsCode = savedAnalyzer.tsCode;
     if (!tsCode) return;
-    console.log('Getting semantic diagnostics...');
-    const semanticDiagnostics = await getSemanticDiagnostics(monaco, tsCode);
-    if (semanticDiagnostics.length > 0) {
-      console.error('Semantic errors found:');
-      console.error(semanticDiagnostics.map(diagnostic => diagnostic.messageText));
-      return;
-    }
     console.log('Transpiling ts to js code...');
-    const jsCode = await transpile(monaco, tsCode);
+    const jsCode = await transpile(tsCode);
     console.log('Building filters...');
     try {
       const { merchantFilter, productFilter } = safeEval(`(()=>{${jsCode};return {merchantFilter,productFilter}})()`);
@@ -65,31 +58,78 @@ export function AnalyzerMaster() {
     }
   };
 
+  const editSavedAnalyzer = () => {
+    if (editSavedAnalyzerId === undefined) return alert('No analyzers selected');
+    destroy('analyzer_editor');
+    create('analyzer_editor', 'Analyzer Editor', <AnalyzerEditor id={editSavedAnalyzerId}></AnalyzerEditor>);
+  };
+
+  const addSavedAnalyzer = () => {
+    const randomNum = Math.floor(Math.random() * 100000000);
+    const id = save({ name: `Untitled-${randomNum}`, tsCode: `
+function merchantFilter(merchant: Merchant) {
+  // Merchant filter here
+  return Math.random() > 0.9;
+}
+
+function productFilter(product: Product) {
+  // Product filter here
+  return Math.random() > 0.9;
+}    
+`   });
+    setEditSavedAnalyzerId(id);
+  };
+
   useEffect(() => setIfoodClient(new IfoodClient()), []);
-  useEffect(() => () => monaco?.editor.getModels().forEach(model => model.dispose()), [monaco]);
+  useEffect(() => () => { disposeMonaco() }, []);
 
   return <div className={styles.container}>
     <span className={styles.title}><b>iFood Analyzer</b></span>
-    <div className={styles.row}>
-      <TextInput placeholder={'Term'} width={150} value={term} onChange={setTerm}></TextInput>
-      <Button onClick={searchForMerchs}>Search Merchs</Button>
+    <div className={styles.group}>
+      <span>Merchants search ({merchants.length} found)</span>
+      <div className={styles.row}>
+        <TextInput placeholder={'Term (sushi, ...)'} width={150} value={term} onChange={setTerm}></TextInput>
+        <Button onClick={searchForMerchs}>Search Merchs</Button>
+      </div>
     </div>
-    <span>Found {merchants.length} merchants!</span>
-    <div className={styles.row}>
-      <SelectInput
-        options={(
-          savedAnalyzers.map(savedAnalyzer => ({
-            key: savedAnalyzer.id,
-            value: savedAnalyzer,
-            elem: savedAnalyzer.name,
-          }))
-        )}
-        width={140}
-        value={savedAnalyzerId}
-        onChange={setSavedAnalyzerId}
-      ></SelectInput>
-      <Button onClick={searchForItems}>Search Items</Button>
+    {merchants.length > 0 && (
+      <div className={styles.group}>
+        <span>Items search ({items.length} found on {filteredMerchants.length} merchs)</span>
+        <div className={styles.row}>
+          <SelectInput
+            options={(
+              savedAnalyzers.map(savedAnalyzer => ({
+                key: savedAnalyzer.id,
+                value: savedAnalyzer,
+                elem: savedAnalyzer.name,
+              }))
+            )}
+            width={140}
+            value={savedAnalyzerId}
+            onChange={setSavedAnalyzerId}
+          ></SelectInput>
+          <Button onClick={searchForItems}>Search Items</Button>
+        </div>
+      </div>
+    )}
+    <div className={styles.group}>
+      <span>Analyzers</span>
+      <div className={styles.row}>
+        <SelectInput
+          options={(
+            savedAnalyzers.map(savedAnalyzer => ({
+              key: savedAnalyzer.id,
+              value: savedAnalyzer,
+              elem: savedAnalyzer.name,
+            }))
+          )}
+          width={140}
+          value={editSavedAnalyzerId}
+          onChange={setEditSavedAnalyzerId}
+        ></SelectInput>
+        <Button onClick={editSavedAnalyzer}>Edit</Button>
+        <Button onClick={addSavedAnalyzer}>Add</Button>
+      </div>
     </div>
-    <span>Found {items.length} items on {filteredMerchants.length} merchants!</span>
   </div>
 }

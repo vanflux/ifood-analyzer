@@ -7,7 +7,7 @@ import { useWindowsStore } from "../../stores/windows";
 
 export function WindowComponent({ instance }: { instance: WindowInstance }) {
   const { destroy } = useWindowsStore();
-  const [ position, setPosition ] = useState({ x: instance.initialX, y: 0 });
+  const [ position, setPosition ] = useState({ x: instance.initialX, y: instance.initialY });
 
   return <div style={{ position: 'fixed', left: 0, top: 0, width: 0, height: 0 }}>
     <Draggable position={position} onDrag={(e, data) => setPosition({x: data.x, y: data.y})} handle={'.' + styles.bar}>
