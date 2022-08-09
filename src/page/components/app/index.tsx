@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useWindowsStore } from "../../stores/windows";
 import { WindowComponent } from "../window-instance";
 import { AnalyzerMaster } from "../analyzer-master";
-import { AnalyzerEditor } from "../analyzer-editor";
-import { SavedAnalyzer } from "../../types/saved-analyzer";
-import { MerchantList } from "../merchant-list";
 import { useSavedAnalyzersStore } from "../../stores/saved-analyzers";
+import { disposeMonaco } from "../../lib/monaco";
+import { useIfoodClientStore } from "../../stores/ifood-client";
+import { IfoodClient } from "../../api/ifood";
 
 export function App() {
-  const { instances, create } = useWindowsStore();
-  const { save } = useSavedAnalyzersStore();
+  const { instances, createWindow } = useWindowsStore();
+  const { setIfoodClient } = useIfoodClientStore();
+
+  const { saveAnalyzer } = useSavedAnalyzersStore();
   useEffect(() => {
-    save({ name: 'My Sushi 1', tsCode: `
+    setIfoodClient(new IfoodClient());
+    saveAnalyzer({ name: 'My Sushi 1', tsCode: `
 function merchantFilter(merchant: Merchant) {
   if (!merchant.available) return false;
   if (merchant.userRating < 4.4) return false;
@@ -32,8 +35,11 @@ function productFilter(product: Product) {
   return true;
 }
 ` });
-    create('analyzer', 'Analyzer Master', <AnalyzerMaster></AnalyzerMaster>);
+    createWindow('analyzer', 'Analyzer Master', <AnalyzerMaster></AnalyzerMaster>);
   }, []);
+  
+  useEffect(() => () => { disposeMonaco() }, []);
+
   return <>
     {instances.map(instance => <WindowComponent key={instance.id} instance={instance}></WindowComponent>)}
   </>

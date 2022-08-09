@@ -8,8 +8,8 @@ import { editor } from "monaco-editor";
 
 export function AnalyzerEditor({ id }: { id: number }) {
   const [editorId] = useState('editor-' + Math.random());
-  const { find, save } = useSavedAnalyzersStore();
-  const savedAnalyzer = find(id);
+  const { findAnalyzer, saveAnalyzer } = useSavedAnalyzersStore();
+  const savedAnalyzer = findAnalyzer(id);
 
   useEffect(() => {
     let editor: editor.IStandaloneCodeEditor;
@@ -24,7 +24,7 @@ export function AnalyzerEditor({ id }: { id: number }) {
       const onChange = debounce(async () => {
         if (!savedAnalyzer) return;
         const tsCode = editor.getModel()?.getValue() || '';
-        save({ ...savedAnalyzer, tsCode });
+        saveAnalyzer({ ...savedAnalyzer, tsCode });
       }, 250);
   
       editor.getModel()?.onDidChangeContent(onChange);
@@ -35,7 +35,7 @@ export function AnalyzerEditor({ id }: { id: number }) {
   }, []);
 
   return <div className={styles.container}>
-    <TextInput value={savedAnalyzer?.name} onChange={name => savedAnalyzer && save({ ...savedAnalyzer, name })}></TextInput>
+    <TextInput roundedBorders={false} value={savedAnalyzer?.name} onChange={name => savedAnalyzer && saveAnalyzer({ ...savedAnalyzer, name })}></TextInput>
     <div className={styles.editor} id={editorId}></div>
   </div>
 }
