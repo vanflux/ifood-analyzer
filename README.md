@@ -1,7 +1,7 @@
 ![](https://img.shields.io/github/v/release/vanflux/ifood-analyzer)
 ![](https://img.shields.io/github/workflow/status/vanflux/ifood-analyzer/Build%20and%20Release%20Action)
 
-# iFood Analyzer (in early development)
+# iFood Analyzer (in development)
 
 Browser extension to search for iFood items throught multiple merchants at same time. This is mostly for fun, I have no intention of maintaining this project forever.
 
