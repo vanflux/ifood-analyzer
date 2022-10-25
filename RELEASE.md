@@ -1,6 +1,6 @@
 Version $VERSION released! 🥳
 
 Changes:
-- Non rounded border on analyzer editor text input
+- Fix api changes
 
 Follow the readme instructions to install the extension

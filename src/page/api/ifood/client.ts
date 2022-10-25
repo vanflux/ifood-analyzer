@@ -9,13 +9,15 @@ export class IfoodClient {
     return fetch(url, {
       method,
       body: method.toLowerCase() === 'get' ? undefined : JSON.stringify(body),
-      headers: session ? {
-        account_id: session.account_id,
-        Authorization: session.access_token,
+      headers: {
         'Content-Type': 'application/json',
         access_key: WSV3_ACCESS_KEY,
         secret_key: WSV3_SECRET_KEY,
-      } : {},
+        ...(session && {
+          account_id: session.account_id,
+          Authorization: session.access_token,
+        }),
+      },
     }).then(x => x.json());
   }
 }
