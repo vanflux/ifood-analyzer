@@ -1,7 +1,7 @@
 ![](https://img.shields.io/github/v/release/vanflux/ifood-analyzer)
 ![](https://img.shields.io/github/actions/workflow/status/vanflux/ifood-analyzer/build-release.yml)
 
-# iFood Analyzer (in development)
+# iFood Analyzer
 
 Browser extension to search for iFood items throught multiple merchants at same time. This is mostly for fun, I have no intention of maintaining this project forever.
 
@@ -48,4 +48,5 @@ What the extension does at the moment:
 
 ## Goal
 
+(Noo)
 - [In progress] Provide some API or UI for the user configure filters to merch & products and get the final cart.
