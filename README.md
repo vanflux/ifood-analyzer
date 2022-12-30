@@ -1,11 +1,21 @@
-![](https://img.shields.io/github/v/release/vanflux/ifood-analyzer)
-![](https://img.shields.io/github/actions/workflow/status/vanflux/ifood-analyzer/build-release.yml)
+<h1 align="center">
+  iFood Analyzer
+</h1>
 
-# iFood Analyzer
+<p align="center">
+  Browser extension to search for iFood items throught multiple merchants at same time.<br>
+  This is mostly for fun, I have no intention of maintaining this project forever.
+</p>
 
-Browser extension to search for iFood items throught multiple merchants at same time. This is mostly for fun, I have no intention of maintaining this project forever.
+<p align="center">
+  <img src="https://img.shields.io/github/v/release/vanflux/ifood-analyzer" />
+  <img src="https://img.shields.io/github/actions/workflow/status/vanflux/ifood-analyzer/build-release.yml" />
+</p>
 
-This project uses [vf-ext](https://github.com/vanflux/vf-ext) to create browser extensions. If you want to create extensions like this, take a look.
+<p align="center">
+  <b>AD time</b>: This project uses <a href="https://github.com/vanflux/vf-ext">vf-ext</a> to create browser extensions.<br>
+  If you want to create extensions like this, take a look.
+</p>
 
 ## Usage
 
