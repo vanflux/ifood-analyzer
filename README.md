@@ -17,9 +17,9 @@
   If you want to create extensions like this, take a look.
 </p>
 
-## Usage
+# Usage
 
-### **Chrome**
+## **Chrome**
 
 - Download the latest [ifood-analyzer.chrome.zip](https://github.com/vanflux/ifood-analyzer/releases)
 - Unzip to some location on your PC
@@ -28,7 +28,7 @@
 - Load the uncompressed extension and pick the unzipped directory
 - Go to ifood.com.br and login on your account
 
-### **Firefox**
+## **Firefox**
 
 - Download the latest [ifood-analyzer.firefox.zip](https://github.com/vanflux/ifood-analyzer/releases)
 - Go to url about:debugging
@@ -40,14 +40,14 @@
 
 ![](./docs/images/screenshoot.png)
 
-## Usage (development)
+# Usage (development)
 
 - Clone repo
 - Run `npm i`
 - Run `npm start` (or, for firefox, `npm start firefox`)
 - Load the extension in development mode on your browser (the extension dir is `build/dev`)
 
-## State
+# State
 
 What the extension does at the moment:
 - Fetches the 100 first merchants related to a term like "sushi"
@@ -56,7 +56,7 @@ What the extension does at the moment:
 - Apply filters to discart products (configured by the user)
 - Show the result on a window (merchants + items)
 
-## Goal
+# Goal
 
 (Noo)
 - [In progress] Provide some API or UI for the user configure filters to merch & products and get the final cart.
