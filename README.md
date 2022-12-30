@@ -1,5 +1,5 @@
 ![](https://img.shields.io/github/v/release/vanflux/ifood-analyzer)
-![](https://img.shields.io/github/workflow/status/vanflux/ifood-analyzer/Build%20and%20Release%20Action)
+![](https://img.shields.io/github/actions/workflow/status/vanflux/ifood-analyzer/build-release.yml)
 
 # iFood Analyzer (in development)
 
